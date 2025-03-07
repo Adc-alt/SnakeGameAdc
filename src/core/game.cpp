@@ -2,11 +2,15 @@
 #include <raymath.h>
 #include <cstdio>
 
-extern int cellCount;
-extern int cellSize;
+// Definición de las constantes estáticas
+const Color Game::green = {173, 204, 96, 255};
+const Color Game::darkGreen = {43,51,24,255};
+const int Game::cellSize = 30;
+const int Game::cellCount = 25;
 
 Game::Game() : snake(), food(snake.body), running(false), isFirstRun(true), 
-               counter(0), blinkTime(0), lives(3), lifeBlinkTime(0), isLifeBlinking(false) {
+               counter(0), blinkTime(0), lives(3), lifeBlinkTime(0), isLifeBlinking(false),
+               lastTimeUpdate(0) {
     // Cargar la textura del corazón
     Image heartImage = LoadImage("assets/heart.png");  // Ruta corregida
     if (heartImage.data == nullptr) {
@@ -172,4 +176,60 @@ void Game::Counter()
     }
 }
 
+bool Game::eventTrigger(double interval)
+{
+    double currentTime = GetTime();
+    if (currentTime - lastTimeUpdate >= interval)
+    {
+        lastTimeUpdate = currentTime;
+        return true;
+    }
+    return false;
+}
 
+void Game::run()
+{
+    while (!WindowShouldClose())
+    {
+        BeginDrawing();
+
+        if (eventTrigger(0.2))
+        {
+            if (running)
+            {
+                snake.Update();
+                Update();
+            }
+        }
+
+        // Input handling
+        if (IsKeyPressed(KEY_UP) && snake.direction.y != 1)
+        {
+            snake.direction = {0,-1};
+            running = true;
+            isFirstRun = false;
+        }
+        if (IsKeyPressed(KEY_DOWN) && snake.direction.y != -1)
+        {
+            snake.direction = {0,1};
+            running = true;
+            isFirstRun = false;
+        }
+        if (IsKeyPressed(KEY_LEFT) && snake.direction.x != 1)
+        {
+            snake.direction = {-1,0};
+            running = true;
+            isFirstRun = false;
+        }
+        if (IsKeyPressed(KEY_RIGHT) && snake.direction.x != -1)
+        {
+            snake.direction = {1,0};
+            running = true;
+            isFirstRun = false;
+        }
+
+        ClearBackground(green);
+        Draw();
+        EndDrawing();
+    }
+}

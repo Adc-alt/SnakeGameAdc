@@ -3,8 +3,18 @@
 
 #include "Snake.h"
 #include "Food.h"
+#include <raylib.h>
 
 class Game {
+
+private:
+    static const Color green;
+    static const Color darkGreen;
+    static const int cellSize;
+    static const int cellCount;
+    double lastTimeUpdate;
+    bool eventTrigger(double interval);
+
 public:
     Snake snake;
     Food food;
@@ -28,6 +38,7 @@ public:
     void blinkText();
     void LoseLife();
     void DrawHearts();  // Nuevo método para dibujar los corazones
+    void run();
 };
 
 #endif 
