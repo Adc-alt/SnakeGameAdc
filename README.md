@@ -4,6 +4,9 @@ A modern implementation of the classic Snake game, built with Raylib and C++. Th
 
 ![Game Preview](preview.jpg)
 
+## 🎯 Project Background
+This project was inspired by a YouTube tutorial, but I've expanded upon it by adding several new features and improvements. The main goal of this project was to enhance my programming skills and improve my code organization abilities. Through this implementation, I focused on creating a well-structured codebase while adding my own functionality to the classic Snake game.
+
 ## 🎮 Features
 - Life system with heart indicators
 - Score tracking system
